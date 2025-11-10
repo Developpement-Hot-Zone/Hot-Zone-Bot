@@ -1,6 +1,8 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
+import json
+from datetime import datetime
 
 # ID du salon de tickets pour la convocation
 TICKET_CHANNEL_ID = 1397869814218756167
@@ -20,7 +22,6 @@ class Convocation(commands.Cog):
     )
     # Vérifie si l'utilisateur a l'une des permissions de modération.
     @app_commands.default_permissions(kick_members=True, ban_members=True)
-    # @app_commands.checks.has_any_role("Moderateur", "Admin") <-- Cette ligne est en commentaire car les permissions sont plus sûres
     async def convoquer(
         self,
         interaction: discord.Interaction,
@@ -65,7 +66,28 @@ class Convocation(commands.Cog):
             await membre.send(embed=dm_embed)
         except discord.Forbidden:
             # Si le membre a désactivé les MPs, le bot en informe l'utilisateur.
-            await interaction.response.send_message(f"Impossible d'envoyer un message privé à {membre.mention}. Il a probablement désactivé les MPs.", ephemeral=True)
+            await interaction.response.send_message(f"Impossible d'envoyer un message privé à {membre.mention}. Il a probablement désactivé les MPs.\n La convocation échouée a été ajoutée à la liste visible avec la commande \"/convocations-échouées\"", ephemeral=True)
+
+            # Ajout de la convocation échouée dans le fichier JSON
+            convocation_data = {
+                "user_id": membre.id,
+                "server_id": interaction.guild.id,
+                "timestamp": datetime.now().strftime("%d/%m/%Y | %H:%M:%S")
+            }
+
+            convocations_file = "Files\Data\Convocations\convocations.json"
+            
+            try:
+                with open(convocations_file, "r", encoding="utf-8") as file:
+                    convocations = json.load(file)
+            except (FileNotFoundError, json.JSONDecodeError):
+                convocations = []
+
+            convocations.append(convocation_data)
+
+            with open(convocations_file, "w", encoding="utf-8") as file:
+                json.dump(convocations, file, indent=4)
+
             return
         
         # 3. Répond à l'interaction pour confirmer que le message a été envoyé.
@@ -84,6 +106,52 @@ class Convocation(commands.Cog):
             # Gère le cas où le salon de convocation n'est pas trouvé
             await interaction.response.send_message("Le salon de convocation est introuvable. Veuillez vérifier l'ID.", ephemeral=True)
 
+    @app_commands.command(name="convocations-échouées", description="Vérifie les convocations échouées (MP).")
+    @app_commands.describe(
+        membre="Vérifier les convocations échouées pour ce membre."
+    )
+    @app_commands.default_permissions(kick_members=True, ban_members=True)
+    async def convocations_echouees(
+        self,
+        interaction: discord.Interaction,
+        membre: discord.Member = None
+    ):
+        convocations_file = "Files\Data\Convocations\convocations.json"
+        
+        try:
+            with open(convocations_file, "r", encoding="utf-8") as file:
+                convocations = json.load(file)
+        except (FileNotFoundError, json.JSONDecodeError):
+            convocations = []
+
+        # Filtrer les convocations pour le serveur actuel
+        server_convocations = [c for c in convocations if c["server_id"] == interaction.guild.id]
+
+        if membre:
+            # Filtrer les convocations pour le membre spécifié dans le serveur actuel
+            filtered_convocations = [c for c in server_convocations if c["user_id"] == membre.id]
+            if not filtered_convocations:
+                await interaction.response.send_message(f"Aucune convocation échouée trouvée pour {membre.mention} dans ce serveur.", ephemeral=True)
+                return
+            
+            message_lines = [f"Convocations échouées pour {membre.mention} dans ce serveur:"]
+            for convocation in filtered_convocations:
+                timestamp = convocation["timestamp"]
+                message_lines.append(f"- Date: {timestamp}")
+            
+            await interaction.response.send_message("\n".join(message_lines), ephemeral=True)
+        else:
+            if not server_convocations:
+                await interaction.response.send_message("Aucune convocation échouée trouvée dans ce serveur.", ephemeral=True)
+                return
+            
+            message_lines = ["Toutes les convocations échouées dans ce serveur:"]
+            for convocation in server_convocations:
+                user_id = convocation["user_id"]
+                timestamp = convocation["timestamp"]
+                message_lines.append(f"- Utilisateur ID: {user_id} | Date: {timestamp}")
+            
+            await interaction.response.send_message("\n".join(message_lines), ephemeral=True)
 
 # La fonction setup est nécessaire pour que la cog soit chargée par le bot.
 async def setup(bot):
