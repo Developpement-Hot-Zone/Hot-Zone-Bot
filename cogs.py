@@ -13,7 +13,7 @@ async def load_all_cogs(bot):
         "Files.Modules.Clear_messages.clear_messages",
         "Files.Modules.Clear_messages.clear_messages_server",
         "Files.Modules.DM_request.MP",
-        "Files.Modules.Convocation.convocation",
+        "Files.Modules.Convocations.convocations",
         "help_command",
         "Files.Modules.Moderation.moderation",
     ]
