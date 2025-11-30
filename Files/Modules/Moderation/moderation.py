@@ -58,17 +58,17 @@ class Moderation(commands.Cog):
         except Exception as e:
             await ctx.send(f"Impossible de mute {member.mention} : {e}")
 
-            @commands.hybrid_command(name="demute", description="Retirer le mute d'un membre")
-            @commands.has_permissions(moderate_members=True)
-            @app_commands.describe(
-                member="Le membre à démute"
-            )
-            async def demute(self, ctx, member: discord.Member):
-                try:
-                    await member.timeout(None, reason="Démute par commande")
-                    await ctx.send(f"{member.mention} a été démute avec succès.")
-                except Exception as e:
-                    await ctx.send(f"Impossible de démute {member.mention} : {e}")
+    @commands.hybrid_command(name="demute", description="Retirer le mute d'un membre")
+    @commands.has_permissions(moderate_members=True)
+    @app_commands.describe(
+        member="Le membre à démute"
+    )
+    async def demute(self, ctx, member: discord.Member):
+        try:
+            await member.timeout(None, reason="Démute par commande")
+            await ctx.send(f"{member.mention} a été démute avec succès.")
+        except Exception as e:
+            await ctx.send(f"Impossible de démute {member.mention} : {e}")
 
     @commands.hybrid_command(name="warn", description="Avertir un membre")
     @commands.has_permissions(moderate_members=True)
