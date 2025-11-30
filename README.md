@@ -42,7 +42,6 @@ Pour faire fonctionner le bot, vous devez installer les modules suivants :
 - `discord.py` - 2.6.3
 - `python-dotenv` - 1.0.0
 - `requests` - 2.31.0
-- `pyyaml` - 6.0
 
 L'installation de ces modules sur votre machine doit se faire via un terminal ou une invite de commande.
 Vous pouvez utiliser la commande `pip install -r requirements.txt` pour installer automatiquement

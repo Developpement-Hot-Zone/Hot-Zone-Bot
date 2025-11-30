@@ -16,6 +16,7 @@ async def load_all_cogs(bot):
         "Files.Modules.Convocations.convocations",
         "help_command",
         "Files.Modules.Moderation.moderation",
+        "Files.Modules.Minimum_Age.minimum_age",
     ]
     for ext in extensions:
         try:
