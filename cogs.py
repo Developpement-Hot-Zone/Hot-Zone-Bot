@@ -2,6 +2,7 @@ import asyncio
 
 async def load_all_cogs(bot):
     extensions = [
+        "Files.Modules.Main.help_command",
         "Files.Modules.AI.AI",
         "Files.Modules.NSFW_AI.AI-enable-disable",
         "Files.Modules.R34.R34",
@@ -14,7 +15,6 @@ async def load_all_cogs(bot):
         "Files.Modules.Clear_messages.clear_messages_server",
         "Files.Modules.DM_request.MP",
         "Files.Modules.Convocations.convocations",
-        "help_command",
         "Files.Modules.Moderation.moderation",
         "Files.Modules.Minimum_Age.minimum_age",
     ]
