@@ -1,7 +1,7 @@
 import os
-from dotenv import load_dotenv
 import discord
 from discord.ext import commands
+from discord import app_commands
 import aiohttp
 import json
 from pathlib import Path
@@ -48,13 +48,13 @@ class GeminiCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.hybrid_command(name="gemini-enable", description="Active Gemini dans ce salon ou un salon spécifié")
+    @app_commands.command(name="gemini-enable", description="Active Gemini dans ce salon ou un salon spécifié")
     async def gemini_enable(self, ctx, channel: discord.TextChannel = None):
         channel = channel or ctx.channel
         channel_persistence.add_channel(channel.id)
         await ctx.send(f"Gemini activé dans {channel.mention}")
 
-    @commands.hybrid_command(name="gemini-disable", description="Désactive Gemini dans ce salon ou un salon spécifié")
+    @app_commands.command(name="gemini-disable", description="Désactive Gemini dans ce salon ou un salon spécifié")
     async def gemini_disable(self, ctx, channel: discord.TextChannel = None):
         channel = channel or ctx.channel
         if channel.id in channel_persistence.channels:

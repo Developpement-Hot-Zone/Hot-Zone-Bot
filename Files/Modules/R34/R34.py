@@ -2,14 +2,8 @@ import discord
 from discord import app_commands
 from discord.ext import commands
 import random
-import os
 
-# Dummy function for server check (to be replaced by actual import)
-def is_guild_allowed(interaction):
-    import sys, os
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
-    from server_check import server_check
-    return server_check(interaction.guild.id)
+allowed_guilds = [1391083075424747660]
 
 class R34(commands.Cog):
     def __init__(self, bot):
@@ -27,7 +21,7 @@ class R34(commands.Cog):
         opt3="Tag facultatif 3 (optionnel)"
     )
     async def r34(self, interaction: discord.Interaction, tag1: str, tag2: str = None, tag3: str = None, tag4: str = None, tag5: str = None, opt1: str = None, opt2: str = None, opt3: str = None):
-        if not is_guild_allowed(interaction):
+        if interaction.guild.id not in allowed_guilds:
             await interaction.response.send_message("Commande non autorisée sur ce serveur.", ephemeral=True)
             return
         # Simulation de recherche d'image (à remplacer par l'appel API réel)

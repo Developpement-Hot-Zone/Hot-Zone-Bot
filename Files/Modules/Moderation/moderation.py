@@ -42,7 +42,7 @@ class Moderation(commands.Cog):
         sanctions[user_id].append(entry)
         save_sanctions(sanctions)
 
-    @commands.hybrid_command(name="mute", description="Rend muet un membre pour une durée définie")
+    @app_commands.command(name="mute", description="Rend muet un membre pour une durée définie")
     @commands.has_permissions(moderate_members=True)
     @app_commands.describe(
         member="Le membre à rendre muet",
@@ -58,7 +58,7 @@ class Moderation(commands.Cog):
         except Exception as e:
             await ctx.send(f"Impossible de mute {member.mention} : {e}")
 
-    @commands.hybrid_command(name="demute", description="Retirer le mute d'un membre")
+    @app_commands.command(name="demute", description="Retirer le mute d'un membre")
     @commands.has_permissions(moderate_members=True)
     @app_commands.describe(
         member="Le membre à démute"
@@ -70,20 +70,20 @@ class Moderation(commands.Cog):
         except Exception as e:
             await ctx.send(f"Impossible de démute {member.mention} : {e}")
 
-    @commands.hybrid_command(name="warn", description="Avertir un membre")
+    @app_commands.command(name="warn", description="Avertir un membre")
     @commands.has_permissions(moderate_members=True)
     async def warn(self, ctx, member: discord.Member, *, reason: str = "Aucune raison fournie"):
         await self.add_sanction(ctx.guild.id, member.id, "warn", reason, ctx.author)
         await ctx.send(f"{member.mention} a été averti pour : {reason}")
 
-    @commands.hybrid_command(name="kick", description="Expulser un membre")
+    @app_commands.command(name="kick", description="Expulser un membre")
     @commands.has_permissions(kick_members=True)
     async def kick(self, ctx, member: discord.Member, *, reason: str = "Aucune raison fournie"):
         await self.add_sanction(ctx.guild.id, member.id, "kick", reason, ctx.author)
         await member.kick(reason=reason)
         await ctx.send(f"{member.mention} a été expulsé pour : {reason}")
 
-    @commands.hybrid_command(name="ban", description="Bannir un membre")
+    @app_commands.command(name="ban", description="Bannir un membre")
     @commands.has_permissions(ban_members=True)
     async def ban(self, ctx, member: discord.Member, time: int = None, *, reason: str = "Aucune raison fournie"):
         # time en jours (optionnel)
@@ -101,7 +101,7 @@ class Moderation(commands.Cog):
                 await ctx.guild.unban(member, reason="Fin du ban temporaire")
             self.bot.loop.create_task(unban_later())
 
-    @commands.hybrid_command(name="unban", description="Débannir un membre")
+    @app_commands.command(name="unban", description="Débannir un membre")
     @commands.has_permissions(ban_members=True)
     async def unban(self, ctx, user: discord.User):
         guild = ctx.guild
@@ -111,7 +111,7 @@ class Moderation(commands.Cog):
         except discord.NotFound:
             await ctx.send(f"{user.name} n'est pas banni.")
 
-    @commands.hybrid_command(name="sanctions", description="Voir l'historique des sanctions")
+    @app_commands.command(name="sanctions", description="Voir l'historique des sanctions")
     @app_commands.describe(utilisateur="Voir les sanctions d'un autre membre (admin uniquement)")
     async def sanctions(self, ctx, utilisateur: discord.Member = None):
         # Si un utilisateur est précisé, vérifier les permissions admin
@@ -156,7 +156,7 @@ class Moderation(commands.Cog):
 
         await ctx.send(embed=embed, ephemeral=True)
 
-    @commands.hybrid_command(name="sanction-remove", description="Retirer une sanction d'un membre sur ce serveur")
+    @app_commands.command(name="sanction-remove", description="Retirer une sanction d'un membre sur ce serveur")
     @commands.has_permissions(administrator=True)
     @app_commands.describe(
         utilisateur="Le membre dont retirer une sanction",

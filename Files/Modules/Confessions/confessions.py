@@ -5,6 +5,7 @@ import random
 import os
 import json
 from typing import Optional
+import re
 
 from . import logs
 
@@ -12,11 +13,7 @@ CONFESSION_CHANNEL_ID = 1400001490134761514
 CONFESSION_NSFW_CHANNEL_ID = 1412080759472132126
 COUNTER_PATH = os.path.join(os.path.dirname(__file__), '../../Data/Confessions/confession_counter.json')
 
-# Utilise la fonction server_check du projet
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
-from server_check import server_check
-is_guild_allowed = server_check()
+allowed_guilds = [1391083075424747660]
 
 # Gestion du compteur de confessions
 def get_confession_count():
@@ -40,7 +37,6 @@ class ConfessionModal(discord.ui.Modal, title="Répondre à la confession"):
         self.confession_message = confession_message
 
     async def on_submit(self, interaction: discord.Interaction):
-        import os, json, re
         COUNTER_PATH = os.path.join(os.path.dirname(__file__), '../../Data/Confessions/confession_counter.json')
         # Récupérer le numéro de confession depuis le titre de l'embed
         confession_embed = self.confession_message.embeds[0] if self.confession_message.embeds else None
@@ -125,7 +121,7 @@ class Confessions(commands.Cog):
     @app_commands.describe(confession="Votre confession", medias="Images ou vidéos (optionnel)")
     async def confesser(self, interaction: discord.Interaction, confession: str, medias: Optional[discord.Attachment] = None):
         # Vérification serveur et salon
-        if not is_guild_allowed(interaction.guild.id):
+        if interaction.guild.id not in allowed_guilds:
             await interaction.response.send_message("Commande non autorisée sur ce serveur.", ephemeral=True)
             return
         if interaction.channel_id != CONFESSION_CHANNEL_ID and interaction.channel_id != CONFESSION_NSFW_CHANNEL_ID:
