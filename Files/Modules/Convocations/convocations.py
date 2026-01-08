@@ -75,7 +75,7 @@ class Convocation(commands.Cog):
                 "timestamp": datetime.now().strftime("%d/%m/%Y | %H:%M:%S")
             }
 
-            convocations_file = "Files\Data\Convocations\convocations.json"
+            convocations_file = "../../Data/Convocations/convocations.json"
             
             try:
                 with open(convocations_file, "r", encoding="utf-8") as file:
@@ -116,7 +116,7 @@ class Convocation(commands.Cog):
         interaction: discord.Interaction,
         membre: discord.Member = None
     ):
-        convocations_file = "Files\Data\Convocations\convocations.json"
+        convocations_file = "../../Data/Convocations/convocations.json"
         
         try:
             with open(convocations_file, "r", encoding="utf-8") as file:

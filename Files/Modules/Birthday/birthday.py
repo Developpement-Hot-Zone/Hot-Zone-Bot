@@ -8,7 +8,7 @@ import os
 class Birthday(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.birthday_data_path = "c:/Users/Admin local/Desktop/Bots/Bot NSFW/Files/Data/Birthday/"
+        self.birthday_data_path = "../../Data/Birthday/birthday_data"
         self.check_birthdays.start()
 
     def load_server_config(self, guild_id):

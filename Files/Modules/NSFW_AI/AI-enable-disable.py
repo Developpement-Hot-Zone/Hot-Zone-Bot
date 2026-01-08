@@ -30,11 +30,7 @@ def update_status(channel_id, enable=True):
             status['disabled'].append(channel_id)
     save_status(status)
 
-def is_guild_allowed(interaction):
-    import sys, os
-    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../')))
-    from server_check import server_check
-    return server_check(interaction.guild.id)
+ALLOWED_GUILD = 123456789012345678  # Remplacez par l'ID du serveur autorisé
 
 class NSFWAI(commands.Cog):
     def __init__(self, bot):
@@ -43,7 +39,7 @@ class NSFWAI(commands.Cog):
     @app_commands.command(name="nsfw-ai-enable", description="Activer l'IA NSFW dans un salon.")
     @app_commands.describe(channel="Salon à activer (optionnel)")
     async def nsfw_ai_enable(self, interaction: discord.Interaction, channel: discord.TextChannel = None):
-        if not is_guild_allowed(interaction):
+        if not ALLOWED_GUILD(interaction):
             await interaction.response.send_message("Commande non autorisée sur ce serveur.", ephemeral=True)
             return
         channel = channel or interaction.channel
@@ -53,7 +49,7 @@ class NSFWAI(commands.Cog):
     @app_commands.command(name="nsfw-ai-disable", description="Désactiver l'IA NSFW dans un salon.")
     @app_commands.describe(channel="Salon à désactiver (optionnel)")
     async def nsfw_ai_disable(self, interaction: discord.Interaction, channel: discord.TextChannel = None):
-        if not is_guild_allowed(interaction):
+        if not ALLOWED_GUILD(interaction):
             await interaction.response.send_message("Commande non autorisée sur ce serveur.", ephemeral=True)
             return
         channel = channel or interaction.channel

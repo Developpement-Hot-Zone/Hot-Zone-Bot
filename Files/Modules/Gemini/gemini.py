@@ -8,7 +8,7 @@ from pathlib import Path
 import asyncio
 
 # Define the file path for channel persistence
-FILE_PATH = Path("Bot NSFW/Files/Data/AI/statut.json")
+FILE_PATH = Path("../../Data/Gemini/statut.json")
 
 class ChannelPersistence:
     def __init__(self, file_path):
@@ -83,7 +83,7 @@ class GeminiCog(commands.Cog):
                 }
             ]
         }
-        params = {"key": os.getenv("GEMINI_API_KEY")}  # Ensure the API key is loaded from environment variables
+        params = {"key": os.getenv("GEMINI_API_KEY")}
 
         async with aiohttp.ClientSession() as session:
             async with session.post(url, headers=headers, params=params, json=payload) as resp:

@@ -1,6 +1,5 @@
 async def load_all_cogs(bot):
     extensions = [
-        "Files.Modules.AI.AI",
         "Files.Modules.Anti_alt.alt_behavior_analysis",
         "Files.Modules.AOV.aov",
         "Files.Modules.Birthday.birthday",
@@ -11,14 +10,17 @@ async def load_all_cogs(bot):
         "Files.Modules.Confessions.reponse",
         "Files.Modules.Convocations.convocations",
         "Files.Modules.DM_request.MP",
+        "Files.Modules.Gemini.gemini",
         "Files.Modules.Lockdown.lockdown",
         "Files.Modules.Main.config",
         "Files.Modules.Main.data_deletion",
         "Files.Modules.Main.help_command",
         "Files.Modules.Main.infos",
+        "Files.Modules.Main.on_join",
         "Files.Modules.Minimum_Age.minimum_age",
         "Files.Modules.Moderation.moderation",
         "Files.Modules.NSFW_AI.AI-enable-disable",
+        "Files.Modules.OAuth2_backup.backup",
         "Files.Modules.R34.R34",
         "Files.Modules.Welcome.welcome",
     ]
