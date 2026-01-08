@@ -2,7 +2,7 @@ import os
 import json
 from datetime import datetime
 
-DATA_PATH = "./Files/Data/AOV/aov_players.json"
+DATA_PATH = os.path.join(os.path.dirname(__file__), "../../Data/AOV/aov_players.json")
 
 def load_players():
     if not os.path.exists(DATA_PATH):

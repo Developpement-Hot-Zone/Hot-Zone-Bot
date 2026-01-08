@@ -1,3 +1,4 @@
+import os
 import discord
 from discord.ext import commands
 from discord import app_commands
@@ -116,7 +117,7 @@ class Convocation(commands.Cog):
         interaction: discord.Interaction,
         membre: discord.Member = None
     ):
-        convocations_file = "../../Data/Convocations/convocations.json"
+        convocations_file = os.path.join(os.path.dirname(__file__), "../../Data/Convocations/convocations.json")
         
         try:
             with open(convocations_file, "r", encoding="utf-8") as file:

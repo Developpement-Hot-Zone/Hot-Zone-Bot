@@ -1,20 +1,20 @@
 import discord
 from discord import app_commands
 from discord.ext import commands
-import yaml
+import json
 import os
 
-DATA_PATH = os.path.join(os.path.dirname(__file__), '../../Data/NSFW_AI/status.yaml')
+DATA_PATH = os.path.join(os.path.dirname(__file__), '../../Data/NSFW_AI/status.json')
 
 def load_status():
     if not os.path.exists(DATA_PATH):
         return {'enabled': [], 'disabled': []}
     with open(DATA_PATH, 'r', encoding='utf-8') as f:
-        return yaml.safe_load(f) or {'enabled': [], 'disabled': []}
+        return json.load(f) or {'enabled': [], 'disabled': []}
 
 def save_status(status):
     with open(DATA_PATH, 'w', encoding='utf-8') as f:
-        yaml.safe_dump(status, f)
+        json.dump(status, f, indent=4)
 
 def update_status(channel_id, enable=True):
     status = load_status()
