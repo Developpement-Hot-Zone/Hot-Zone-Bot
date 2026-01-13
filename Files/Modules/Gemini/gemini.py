@@ -8,7 +8,7 @@ from pathlib import Path
 import asyncio
 
 # Define the file path for channel persistence
-FILE_PATH = os.path.join(os.path.dirname(__file__), "../../Data/Gemini/statut.json")
+FILE_PATH = "Files/Data/Gemini/statut.json"
 
 class ChannelPersistence:
     def __init__(self, file_path):

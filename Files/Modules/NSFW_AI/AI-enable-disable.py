@@ -4,7 +4,7 @@ from discord.ext import commands
 import json
 import os
 
-DATA_PATH = os.path.join(os.path.dirname(__file__), '../../Data/NSFW_AI/status.json')
+DATA_PATH = "Files/Data/NSFW_AI/status.json"
 
 def load_status():
     if not os.path.exists(DATA_PATH):

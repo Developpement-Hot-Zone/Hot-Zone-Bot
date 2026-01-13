@@ -5,8 +5,8 @@ import json
 import os
 import csv
 
-MINIMUM_AGE_FILE = os.path.join(os.path.dirname(__file__), "../../Data/Minimum_age/minimum_age.json")
-CSV_LOG_FILE = os.path.join(os.path.dirname(__file__), "../../Data/Minimum_age/message_status.csv")
+MINIMUM_AGE_FILE = "Files/Data/Minimum_age/minimum_age.json"
+CSV_LOG_FILE = "Files/Data/Minimum_age/message_status.csv"
 
 class Minimum_age(commands.Cog):
     def __init__(self, bot):

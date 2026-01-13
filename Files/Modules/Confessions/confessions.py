@@ -11,7 +11,7 @@ from . import logs
 
 CONFESSION_CHANNEL_ID = 1400001490134761514
 CONFESSION_NSFW_CHANNEL_ID = 1412080759472132126
-COUNTER_PATH = os.path.join(os.path.dirname(__file__), '../../Data/Confessions/confession_counter.json')
+COUNTER_PATH = "Files/Data/Confessions/confession_counter.json"
 
 allowed_guilds = [1391083075424747660]
 
@@ -37,7 +37,7 @@ class ConfessionModal(discord.ui.Modal, title="Répondre à la confession"):
         self.confession_message = confession_message
 
     async def on_submit(self, interaction: discord.Interaction):
-        COUNTER_PATH = os.path.join(os.path.dirname(__file__), '../../Data/Confessions/confession_counter.json')
+        COUNTER_PATH = "Files/Data/Confessions/confession_counter.json"
         # Récupérer le numéro de confession depuis le titre de l'embed
         confession_embed = self.confession_message.embeds[0] if self.confession_message.embeds else None
         confession_num = None

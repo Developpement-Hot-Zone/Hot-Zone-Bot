@@ -13,7 +13,7 @@ class Infos(commands.Cog):
         guild = interaction.guild
 
         # Configuration du module "welcome"
-        welcome_data_path = os.path.join(os.path.dirname(__file__), "../../Data/Welcome/welcome_data.json")
+        welcome_data_path = "Files/Data/Welcome/welcome_data.json"
         if os.path.exists(welcome_data_path):
             with open(welcome_data_path, "r") as f:
                 welcome_data = json.load(f)
@@ -25,7 +25,7 @@ class Infos(commands.Cog):
             welcome_channel = "N/A"
 
         # Configuration des modules d'intelligence artificielle
-        ai_data_path = os.path.join(os.path.dirname(__file__), "../../Data/AI/statut.json")
+        ai_data_path = "Files/Data/AI/statut.json"
         if os.path.exists(ai_data_path):
             with open(ai_data_path, "r") as f:
                 ai_channels = json.load(f)
@@ -34,7 +34,7 @@ class Infos(commands.Cog):
             ai_channels_list = []
 
         # Configuration de l'âge minimum
-        minimum_age_path = os.path.join(os.path.dirname(__file__), "../../Data/Minimum_age/minimum_age.json")
+        minimum_age_path = "Files/Data/Minimum_age/minimum_age.json"
         if os.path.exists(minimum_age_path):
             with open(minimum_age_path, "r") as f:
                 minimum_age_data = json.load(f)
@@ -43,7 +43,7 @@ class Infos(commands.Cog):
             minimum_age = "Non configuré"
 
         # Salons bloqués
-        chan_lock_path = os.path.join(os.path.dirname(__file__), "../../Data/Chan_lock/chan_lock_status.json")
+        chan_lock_path = "Files/Data/Chan_lock/chan_lock_status.json"
         if os.path.exists(chan_lock_path):
             with open(chan_lock_path, "r") as f:
                 chan_lock_data = json.load(f)
@@ -56,11 +56,11 @@ class Infos(commands.Cog):
             locked_channels = []
 
         # Serveur en lockdown
-        lockdown_path = os.path.join(os.path.dirname(__file__), "../../Data/Lockdown/lockdown_perms_backup.json")
+        lockdown_path = "Files/Data/Lockdown/lockdown_perms_backup.json"
         is_lockdown = "Oui" if os.path.exists(lockdown_path) else "Non"
 
         # Configuration du système d'anniversaires
-        birthday_config_path = os.path.join(os.path.dirname(__file__), f"../../Data/Birthday/server_{guild.id}.json")
+        birthday_config_path = f"Files/Data/Birthday/server_{guild.id}.json"
         if os.path.exists(birthday_config_path):
             with open(birthday_config_path, "r") as f:
                 birthday_config = json.load(f)
@@ -76,7 +76,7 @@ class Infos(commands.Cog):
         total_commands = len(self.bot.tree.get_commands())
 
         # Nombre de joueurs actifs sur "Actions ou Vérité"
-        aov_data_path = os.path.join(os.path.dirname(__file__), "../../Data/AOV/aov_players.json")
+        aov_data_path = "Files/Data/AOV/aov_players.json"
         if os.path.exists(aov_data_path):
             with open(aov_data_path, "r") as f:
                 aov_data = json.load(f)
@@ -85,7 +85,7 @@ class Infos(commands.Cog):
             aov_players = 0
 
         # Nombre de confessions
-        confession_counter_path = os.path.join(os.path.dirname(__file__), "../../Data/Confessions/confession_counter.json")
+        confession_counter_path = "Files/Data/Confessions/confession_counter.json"
         if os.path.exists(confession_counter_path):
             with open(confession_counter_path, "r") as f:
                 confession_data = json.load(f)
@@ -104,7 +104,7 @@ class Infos(commands.Cog):
             total_responses = 0
 
         # Nombre de convocations effectuées
-        convocations_path = os.path.join(os.path.dirname(__file__), "../../Data/Convocations/convocations.json")
+        convocations_path = "Files/Data/Convocations/convocations.json"
         if os.path.exists(convocations_path):
             with open(convocations_path, "r") as f:
                 convocations_data = json.load(f)
@@ -113,7 +113,7 @@ class Infos(commands.Cog):
             total_convocations = 0
 
         # Nombre de demandes de MP effectuées
-        dm_requests_path = os.path.join(os.path.dirname(__file__), "../../Data/DM_request/dm_requests.json")
+        dm_requests_path = "Files/Data/DM_request/dm_requests.json"
         if os.path.exists(dm_requests_path):
             with open(dm_requests_path, "r") as f:
                 dm_requests_data = json.load(f)

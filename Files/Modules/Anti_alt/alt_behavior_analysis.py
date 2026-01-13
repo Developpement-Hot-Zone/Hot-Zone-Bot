@@ -9,7 +9,7 @@ import os
 # --- CONFIGURATION (À REMPLACER) ---
 STAFF_CHANNEL_ID = 123456789012345678  # ID du salon de staff pour les alertes
 QUARANTINE_ROLE_ID = 123456789012345678  # ID du rôle de quarantaine/muted (Score < 5)
-SCORE_FILE_PATH = os.path.join(os.path.dirname(__file__), "../../Data/Alt_Analysis/confidence_scores.json")
+SCORE_FILE_PATH = "Files/Data/Alt_Analysis/confidence_scores.json"
 STAFF_ROLE_MENTION = "<@NONE>"  # Mention de rôle pour alerter le staff
 
 # --- PARAMÈTRES DE RISQUE ---

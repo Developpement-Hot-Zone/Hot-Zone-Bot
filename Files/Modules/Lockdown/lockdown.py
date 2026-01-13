@@ -5,7 +5,7 @@ import json
 from datetime import datetime, timezone, timedelta
 import os
 
-PERMS_BACKUP_FILE = os.path.join(os.path.dirname(__file__), "Files/Data/Lockdown/lockdown_perms_backup.json")
+PERMS_BACKUP_FILE = "Files/Data/Lockdown/lockdown_perms_backup.json"
 
 class Lockdown(commands.Cog):
     def __init__(self, bot):

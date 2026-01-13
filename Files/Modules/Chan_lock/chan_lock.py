@@ -4,7 +4,7 @@ from discord import app_commands
 import os
 import json
 
-DATA_PATH = os.path.join(os.path.dirname(__file__), "../../Data/Chan_lock/chan_lock_status.json")
+DATA_PATH = "Files/Data/Chan_lock/chan_lock_status.json"
 
 def save_status(guild_id, channel_id, status):
 	if not os.path.exists(os.path.dirname(DATA_PATH)):

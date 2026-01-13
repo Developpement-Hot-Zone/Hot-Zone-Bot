@@ -29,7 +29,7 @@ from discord import app_commands
 import os
 import json
 
-CONFESSION_DATA_PATH = os.path.join(os.path.dirname(__file__), '../../Data/Confessions/confession_counter.json')
+CONFESSION_DATA_PATH = "Files/Data/Confessions/confession_counter.json"
 LOG_CHANNEL_ID = 1409259784946978847
 
 class Reponse(commands.Cog):

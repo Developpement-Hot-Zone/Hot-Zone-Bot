@@ -8,7 +8,7 @@ import os
 class Welcome(commands.Cog):
 	def __init__(self, bot):
 		self.bot = bot
-		self.data_file = os.path.join(os.path.dirname(__file__), "../../Data/Welcome/welcome_data.json")
+		self.data_file = "Files/Data/Welcome/welcome_data.json"
 		os.makedirs(os.path.dirname(self.data_file), exist_ok=True)
 		if not os.path.exists(self.data_file):
 			with open(self.data_file, "w") as f:
