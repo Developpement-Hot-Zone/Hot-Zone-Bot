@@ -142,6 +142,9 @@ Data/
 # Bot status update files
 S_*
 
+# Dashboard
+Dashboard/
+
 # Spyder project settings
 .spyderproject
 .spyproject
