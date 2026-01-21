@@ -19,6 +19,7 @@ en signalant des potentiels risques et vulnérabilités
 Cette page GitHub a été créée dans le but de savoir exactement ce que fait Hot Zone Bot,
 créant une transparence entre développeurs et utilisateurs.
 
+> [!CAUTION]
 La copie partielle des fichiers du projet est autorisée. Tant que
 vous n'en faites aucune utilisation commerciale.
 
@@ -43,15 +44,23 @@ Pour faire fonctionner le bot, vous devez installer les modules suivants :
 - `python-dotenv` - 1.0.0
 - `requests` - 2.31.0
 
+> [!TIP]
 L'installation de ces modules sur votre machine doit se faire via un terminal ou une invite de commande.
 Vous pouvez utiliser la commande `pip install -r requirements.txt` pour installer automatiquement
 tous les modules nécessaires qui apparaissent dans le fichier `requirements.txt`.
-
+---
 > Assurez-vous d'avoir `pip` installé sur votre machine avant d'exécuter cette commande.
 
 Vous pourrez ensuite installer les modules dans votre environnement virtuel si vous en utilisez un.
 
+---
+
 > Vous pouvez créer un environnement virtuel avec la commande `python -m venv "nom_de_votre_env"`.
+
+---
+
+> [!WARNING]
+Sur linux, l'environnement virtuel se crée avec la commande `python3 -m venv "nom_de_votre_env"`.
 
 Pour activer l'environnement virtuel, utilisez la commande appropriée en fonction de votre système d'exploitation :
 
@@ -75,12 +84,8 @@ directement dans le terminal de votre éditeur de code avec l'environnement virt
 
 ### Lancement du bot
 
-Plusieurs fichiers `.py` permettent de lancer le bot.
-Ceux-ci sont situés à la racine du projet et commencent par `S_`.
-
-Ceux-ci lancent le bot avec des configurations différentes.
-Par exemple, `S_En Ligne.py` lance le bot en mode en ligne,
-tandis que `S_Updating.py` lance le bot avec le statut "Mise à jour en cours...".
+Le bot sera lancé via un fichier principal non partagé publiquement pour des raisons de sécurité.
+Ce fichier contient le token du bot et permettra de le faire fonctionner.
 
 > Le bot est capable de tourner en 24/7 si votre hébergeur le permet.
 
@@ -88,17 +93,21 @@ tandis que `S_Updating.py` lance le bot avec le statut "Mise à jour en cours...
 
 Les fichiers du projet sont mis à jour régulièrement pour ajouter des fonctionnalités,
 corriger des bugs et améliorer la sécurité.
+
+> [!TIP]
 Vous pouvez consulter l'historique des modifications dans l'onglet "Commits" du dépôt GitHub.
+---
+> [!NOTE]
 Il est recommandé de vérifier régulièrement les mises à jour
 et de les appliquer pour bénéficier des dernières améliorations.
-
-> Vous pouvez également suivre les discussions
+---
+> [!TIP]
+Vous pouvez également suivre les discussions
 et les demandes de fonctionnalités dans l'onglet "Issues" de ce dépôt GitHub.
 ---
 > Notez qu'aucun module ne sera supprimé et que ceux déjà présents dans le projet ne seront pas mis à jour de manière
 régulière afin d'éviter de rendre des commandes inutilisables et de devoir les réécrire.
 Cependant, des mises à jour ponctuelles des modules peuvent être effectuées si nécessaire.
-
 ---
 
 ## Interactions avec Discord
@@ -123,7 +132,8 @@ C'est le cas des modules AI, AOV, Chan_lock, Confessions, Convocations, Lockdown
 | **Modération**    | Données relatives aux sanctions                                                                         |
 | **NSFW-AI**       | ID des salons où l'IA est activée                                                                       |
 
-> Absolument aucune donnée n'est stockée de manière permanente par le bot. Ceux-ci sont toujours supprimés après un certain temps
+> [!IMPORTANT]
+Absolument aucune donnée n'est stockée de manière permanente par le bot. Ceux-ci sont toujours supprimés après un certain temps
 (Après leur utilisation dans Discord)
 
 |    **Module**     |                      **Suppression des données**                          |
