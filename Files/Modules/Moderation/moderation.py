@@ -5,8 +5,12 @@ import json
 import os
 from datetime import datetime, timedelta
 import pytz
+import logging
 
-SANCTIONS_FILE = "../../Data/Moderation/sanctions.json"
+SANCTIONS_FILE = os.path.join(os.getcwd(), "Files/Data/Moderation/sanctions.json")
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def load_sanctions():
     if not os.path.exists(SANCTIONS_FILE):
@@ -24,6 +28,7 @@ def save_sanctions(data):
 class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        logging.info("Moderation module initialized.")
 
     async def add_sanction(self, guild_id, user_id, sanction_type, reason, moderator, duration=None):
         sanctions = load_sanctions()
@@ -57,6 +62,7 @@ class Moderation(commands.Cog):
             await ctx.send(f"{member.mention} a été mute pour {duration} minute(s) : {reason}")
         except Exception as e:
             await ctx.send(f"Impossible de mute {member.mention} : {e}")
+            logging.error(f"Error muting {member.mention}: {e}")
 
     @app_commands.command(name="demute", description="Retirer le mute d'un membre")
     @commands.has_permissions(moderate_members=True)
@@ -69,6 +75,7 @@ class Moderation(commands.Cog):
             await ctx.send(f"{member.mention} a été démute avec succès.")
         except Exception as e:
             await ctx.send(f"Impossible de démute {member.mention} : {e}")
+            logging.error(f"Error demuting {member.mention}: {e}")
 
     @app_commands.command(name="warn", description="Avertir un membre")
     @commands.has_permissions(moderate_members=True)
@@ -110,6 +117,11 @@ class Moderation(commands.Cog):
             await ctx.send(f"{user.name} a été débanni.")
         except discord.NotFound:
             await ctx.send(f"{user.name} n'est pas banni.")
+
+    """
+    - Ajouter la liste des convocations échouées par la commande /sanctions
+    - Cette sanction peut être retirée avec la commande /sanction-remove
+    """
 
     @app_commands.command(name="sanctions", description="Voir l'historique des sanctions")
     @app_commands.describe(utilisateur="Voir les sanctions d'un autre membre (admin uniquement)")

@@ -4,14 +4,19 @@ from discord import app_commands
 import json
 import os
 import csv
+import logging
 
-MINIMUM_AGE_FILE = "Files/Data/Minimum_age/minimum_age.json"
-CSV_LOG_FILE = "Files/Data/Minimum_age/message_status.csv"
+MINIMUM_AGE_FILE = os.path.join(os.getcwd(), "Files/Data/Minimum_age/minimum_age.json")
+CSV_LOG_FILE = os.path.join(os.getcwd(), "Files/Data/Minimum_age/message_status.csv")
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 class Minimum_age(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.minimum_ages = self.load_minimum_ages()
+        logging.info("Minimum_Age module initialized.")
 
     def load_minimum_ages(self):
         # Ensure the file exists before attempting to load
@@ -34,6 +39,7 @@ class Minimum_age(commands.Cog):
 
         self.minimum_ages[str(interaction.guild.id)] = days
         self.save_minimum_ages()
+        logging.info(f"Set minimum account age for guild {interaction.guild.id} to {days} days.")
         # Send a follow-up message to avoid indefinite thinking
         await interaction.followup.send(f"L'âge minimum d'un compte pour ce serveur a été défini à {days} jours.")
 
@@ -52,8 +58,10 @@ class Minimum_age(commands.Cog):
                 self.log_message_status(member.id, "OK")
             except discord.Forbidden:
                 self.log_message_status(member.id, "FAIL")
+                logging.warning(f"Failed to send DM to member {member.id}. They might have DMs disabled.")
 
             await member.kick(reason=f"Compte trop récent (moins de {minimum_days} jours).")
+            logging.info(f"Kicked member {member.id} for having an account younger than {minimum_days} days.")
 
     def log_message_status(self, member_id, status):
         # Ensure the directory exists before writing
@@ -64,6 +72,7 @@ class Minimum_age(commands.Cog):
             if not file_exists:
                 writer.writerow(["Member ID", "Status"])
             writer.writerow([member_id, status])
+            logging.info(f"Logged message status for member {member_id}: {status}")
 
 async def setup(bot):
     await bot.add_cog(Minimum_age(bot))

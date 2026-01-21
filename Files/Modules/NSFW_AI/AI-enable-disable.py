@@ -3,8 +3,13 @@ from discord import app_commands
 from discord.ext import commands
 import json
 import os
+import logging
 
-DATA_PATH = "Files/Data/NSFW_AI/status.json"
+DATA_PATH = os.path.join(os.getcwd(), "Files/Data/NSFW_AI/status.json")
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.info("NSFW_AI module initialized.")
 
 def load_status():
     if not os.path.exists(DATA_PATH):
@@ -45,6 +50,7 @@ class NSFWAI(commands.Cog):
         channel = channel or interaction.channel
         update_status(channel.id, enable=True)
         await interaction.response.send_message(f"IA NSFW activée dans {channel.mention}", ephemeral=True)
+        logging.info(f"IA NSFW activée dans {channel.mention} par {interaction.user}")
 
     @app_commands.command(name="nsfw-ai-disable", description="Désactiver l'IA NSFW dans un salon.")
     @app_commands.describe(channel="Salon à désactiver (optionnel)")
@@ -55,6 +61,7 @@ class NSFWAI(commands.Cog):
         channel = channel or interaction.channel
         update_status(channel.id, enable=False)
         await interaction.response.send_message(f"IA NSFW désactivée dans {channel.mention}", ephemeral=True)
+        logging.info(f"IA NSFW désactivée dans {channel.mention} par {interaction.user}")
 
 async def setup(bot):
     await bot.add_cog(NSFWAI(bot))

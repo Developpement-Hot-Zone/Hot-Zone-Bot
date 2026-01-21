@@ -2,8 +2,8 @@ import discord
 from discord.ext import commands
 from discord import app_commands
 
-CHANNEL_ID = 1391884753694752908  # Salon autorisé
-REPORT_CHANNEL_ID = 1406007807647551641  # Salon de signalement
+CHANNEL_ID = 1391884753694752908
+REPORT_CHANNEL_ID = 1406007807647551641
 
 class DMRequest(commands.Cog):
     def __init__(self, bot):
