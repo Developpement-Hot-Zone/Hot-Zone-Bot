@@ -115,7 +115,10 @@ class HelpCommand(commands.Cog):
         # Supprimer le message après 30 secondes d'inactivité
         await asyncio.sleep(30)
         try:
-            await message.delete()
+            if 'message' in locals():
+                await message.delete()
+            else:
+                await interaction.response.send_message("Aucun message à supprimer.", ephemeral=True)
         except discord.NotFound:
             pass
 

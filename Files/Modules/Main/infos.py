@@ -128,7 +128,7 @@ class Infos(commands.Cog):
 
         # Nombre de personnes bannies
         try:
-            banned_users = await guild.bans()
+            banned_users = [entry async for entry in guild.bans()]
             total_banned = len(banned_users)
         except discord.Forbidden:
             total_banned = "Permissions insuffisantes"

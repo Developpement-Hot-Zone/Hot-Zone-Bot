@@ -76,8 +76,12 @@ class Convocation(commands.Cog):
                 "timestamp": datetime.now().strftime("%d/%m/%Y | %H:%M:%S")
             }
 
-            convocations_file = "../../Data/Convocations/convocations.json"
-            
+            convocations_file = os.path.join(os.getcwd(), "Files/Data/Convocations/convocations.json")
+            os.makedirs(os.path.dirname(convocations_file), exist_ok=True)
+            if not os.path.exists(convocations_file):
+                with open(convocations_file, "w", encoding="utf-8") as file:
+                    json.dump({}, file, indent=4)
+
             try:
                 with open(convocations_file, "r", encoding="utf-8") as file:
                     convocations = json.load(file)
@@ -105,7 +109,11 @@ class Convocation(commands.Cog):
             await interaction.response.send_message("La convocation a été envoyée avec succès !", ephemeral=True)
         else:
             # Gère le cas où le salon de convocation n'est pas trouvé
-            await interaction.response.send_message("Le salon de convocation est introuvable. Veuillez vérifier l'ID.", ephemeral=True)
+            # Ensure interaction is not responded to twice
+            if interaction.response.is_done():
+                await interaction.followup.send("Le salon de convocation est introuvable. Veuillez vérifier l'ID.", ephemeral=True)
+            else:
+                await interaction.response.send_message("Le salon de convocation est introuvable. Veuillez vérifier l'ID.", ephemeral=True)
 
     @app_commands.command(name="convocations-échouées", description="Vérifie les convocations échouées (MP).")
     @app_commands.describe(

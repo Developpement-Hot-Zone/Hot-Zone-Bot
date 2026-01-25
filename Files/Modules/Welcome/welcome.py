@@ -28,9 +28,9 @@ class Welcome(commands.Cog):
 			json.dump(data, f, indent=4)
 
 	@app_commands.command(name="welcome-set", description="Configure le message de bienvenue et le salon.")
-	async def welcome_set(self, interaction: discord.Interaction, message: str, channel_id: int):
+	async def welcome_set(self, interaction: discord.Interaction, message: str, channel: discord.TextChannel):
 		data = self.load_data()
-		data[str(interaction.guild.id)] = {"message": message, "channel_id": channel_id}
+		data[str(interaction.guild.id)] = {"message": message, "channel_id": channel.id}
 		self.save_data(data)
 		await interaction.response.send_message("Message de bienvenue configuré avec succès !", ephemeral=True)
 		logging.info(f"Welcome message set for guild {interaction.guild.id}")

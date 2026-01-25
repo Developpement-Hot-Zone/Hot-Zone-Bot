@@ -25,6 +25,12 @@ def save_sanctions(data):
     with open(SANCTIONS_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
 
+# Ensure the sanctions file exists
+os.makedirs(os.path.dirname(SANCTIONS_FILE), exist_ok=True)
+if not os.path.exists(SANCTIONS_FILE):
+    with open(SANCTIONS_FILE, "w", encoding="utf-8") as f:
+        json.dump({}, f, indent=4)
+
 class Moderation(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -55,13 +61,13 @@ class Moderation(commands.Cog):
         reason="Raison du mute"
     )
     async def mute(self, ctx, member: discord.Member, duration: int, *, reason: str = "Aucune raison fournie"):
-        until = datetime.utcnow() + timedelta(minutes=duration)
+        until = discord.utils.utcnow().astimezone() + timedelta(minutes=duration)
         try:
             await member.timeout(until, reason=reason)
-            await self.add_sanction(ctx.guild.id, member.id, "mute", reason, ctx.author, duration=f"{duration}min")
-            await ctx.send(f"{member.mention} a été mute pour {duration} minute(s) : {reason}")
+            await self.add_sanction(ctx.guild.id, member.id, "mute", reason, ctx.author, duration=duration)
+            await ctx.response.send_message(f"{member.mention} a été rendu muet pour {duration} minutes pour : {reason}", ephemeral=True)
         except Exception as e:
-            await ctx.send(f"Impossible de mute {member.mention} : {e}")
+            await ctx.response.send_message(f"Impossible de mute {member.mention} : {e}", ephemeral=True)
             logging.error(f"Error muting {member.mention}: {e}")
 
     @app_commands.command(name="demute", description="Retirer le mute d'un membre")
@@ -72,16 +78,17 @@ class Moderation(commands.Cog):
     async def demute(self, ctx, member: discord.Member):
         try:
             await member.timeout(None, reason="Démute par commande")
-            await ctx.send(f"{member.mention} a été démute avec succès.")
+            await ctx.response.send_message(f"{member.mention} a été démute avec succès.")
         except Exception as e:
-            await ctx.send(f"Impossible de démute {member.mention} : {e}")
+            await ctx.response.send_message(f"Impossible de démute {member.mention} : {e}")
             logging.error(f"Error demuting {member.mention}: {e}")
 
     @app_commands.command(name="warn", description="Avertir un membre")
     @commands.has_permissions(moderate_members=True)
+    @app_commands.describe(member="Le membre à avertir", reason="Raison de l'avertissement")
     async def warn(self, ctx, member: discord.Member, *, reason: str = "Aucune raison fournie"):
         await self.add_sanction(ctx.guild.id, member.id, "warn", reason, ctx.author)
-        await ctx.send(f"{member.mention} a été averti pour : {reason}")
+        await ctx.response.send_message(f"{member.mention} a été averti pour : {reason}", ephemeral=True)
 
     @app_commands.command(name="kick", description="Expulser un membre")
     @commands.has_permissions(kick_members=True)

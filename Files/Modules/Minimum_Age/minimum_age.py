@@ -31,7 +31,7 @@ class Minimum_age(commands.Cog):
         with open(MINIMUM_AGE_FILE, 'w') as file:
             json.dump(self.minimum_ages, file, indent=4)
 
-    @app_commands.command(name="set_minimum_age", description="Définir l'âge minimum d'un compte pour accéder au serveur (admin seulement)")
+    @app_commands.command(name="set-minimum-age", description="Définir l'âge minimum d'un compte pour accéder au serveur (admin seulement)")
     @app_commands.checks.has_permissions(administrator=True)
     async def set_minimum_age(self, interaction: discord.Interaction, days: int):
         # Acknowledge the interaction immediately
@@ -41,7 +41,7 @@ class Minimum_age(commands.Cog):
         self.save_minimum_ages()
         logging.info(f"Set minimum account age for guild {interaction.guild.id} to {days} days.")
         # Send a follow-up message to avoid indefinite thinking
-        await interaction.followup.send(f"L'âge minimum d'un compte pour ce serveur a été défini à {days} jours.")
+        await interaction.followup.send(f"L'âge minimum d'un compte pour ce serveur a été défini à {days} jours.", ephemeral=True)
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
