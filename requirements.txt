@@ -9,6 +9,6 @@ typing-extensions==4.15.0
 aiohttp==3.13.3
 asyncio==4.0.0
 pathlib==1.0.1
-quartz==0.0.1
+quartz==0.0.1.dev0
 quart-discord==2.3.3
 logging==0.4.9.6
