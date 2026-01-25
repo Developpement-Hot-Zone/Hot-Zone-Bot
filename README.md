@@ -38,11 +38,7 @@ Cela exclut toute donnée sensible ou personnelle des utilisateurs.
 
 ### Installation des modules
 
-Pour faire fonctionner le bot, vous devez installer les modules suivants :
-
-- `discord.py` - 2.6.3
-- `python-dotenv` - 1.0.0
-- `requests` - 2.31.0
+Pour faire fonctionner le bot, vous devez installer les modules présents dans le fichier `requirements.txt`.
 
 > [!TIP]
 L'installation de ces modules sur votre machine doit se faire via un terminal ou une invite de commande.
