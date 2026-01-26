@@ -88,6 +88,10 @@ class Convocation(commands.Cog):
             except (FileNotFoundError, json.JSONDecodeError):
                 convocations = []
 
+            # Assurez-vous que 'convocations' est une liste
+            if not isinstance(convocations, list):
+                convocations = []
+
             convocations.append(convocation_data)
 
             with open(convocations_file, "w", encoding="utf-8") as file:

@@ -35,12 +35,12 @@ class Minimum_age(commands.Cog):
     @app_commands.checks.has_permissions(administrator=True)
     async def set_minimum_age(self, interaction: discord.Interaction, days: int):
         # Acknowledge the interaction immediately
-        await interaction.response.defer()
+        await interaction.response.defer(ephemeral=True)
 
         self.minimum_ages[str(interaction.guild.id)] = days
         self.save_minimum_ages()
         logging.info(f"Set minimum account age for guild {interaction.guild.id} to {days} days.")
-        # Send a follow-up message to avoid indefinite thinking
+        # Send a follow-up message as an ephemeral message
         await interaction.followup.send(f"L'âge minimum d'un compte pour ce serveur a été défini à {days} jours.", ephemeral=True)
 
     @commands.Cog.listener()

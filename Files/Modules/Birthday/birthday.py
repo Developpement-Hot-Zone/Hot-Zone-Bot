@@ -97,14 +97,20 @@ class Birthday(commands.Cog):
     @app_commands.command(name="birthday-set")
     async def birthday_set(self, ctx, date: str):
         "Indiquez votre date d'anniversaire (JJ/MM/AAAA)."
+        interaction = ctx
+        birthdays = self.load_user_birthdays()
+        # Remplacez ctx.author par interaction.user
+        birthdays[str(interaction.user.id)] = date
+
+        # Validation du format de date
         try:
             datetime.strptime(date, "%d/%m/%Y")
-            birthdays = self.load_user_birthdays()
-            birthdays[str(ctx.author.id)] = date
-            self.save_user_birthdays(birthdays)
-            await ctx.respond("Votre anniversaire a été enregistré.")
         except ValueError:
-            await ctx.respond("Format de date invalide. Veuillez utiliser JJ/MM/AAAA.")
+            await interaction.response.send_message("Format de date invalide. Veuillez utiliser JJ/MM/AAAA.", ephemeral=True)
+            return
+
+        self.save_user_birthdays(birthdays)
+        await ctx.respond("Votre anniversaire a été enregistré.")
 
     @tasks.loop(minutes=1)
     async def check_birthdays(self):
