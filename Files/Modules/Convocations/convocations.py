@@ -73,14 +73,15 @@ class Convocation(commands.Cog):
             convocation_data = {
                 "user_id": membre.id,
                 "server_id": interaction.guild.id,
-                "timestamp": datetime.now().strftime("%d/%m/%Y | %H:%M:%S")
+                "timestamp": datetime.now().strftime("%d/%m/%Y | %H:%M:%S"),
+                "reason": raison
             }
 
             convocations_file = os.path.join(os.getcwd(), "Files/Data/Convocations/convocations.json")
             os.makedirs(os.path.dirname(convocations_file), exist_ok=True)
             if not os.path.exists(convocations_file):
                 with open(convocations_file, "w", encoding="utf-8") as file:
-                    json.dump({}, file, indent=4)
+                    json.dump([], file, indent=4)
 
             try:
                 with open(convocations_file, "r", encoding="utf-8") as file:
@@ -88,14 +89,13 @@ class Convocation(commands.Cog):
             except (FileNotFoundError, json.JSONDecodeError):
                 convocations = []
 
-            # Assurez-vous que 'convocations' est une liste
             if not isinstance(convocations, list):
                 convocations = []
 
             convocations.append(convocation_data)
 
             with open(convocations_file, "w", encoding="utf-8") as file:
-                json.dump(convocations, file, indent=4)
+                json.dump(convocations, file, indent=4, ensure_ascii=False)
 
             return
         
@@ -162,7 +162,8 @@ class Convocation(commands.Cog):
             for convocation in server_convocations:
                 user_id = convocation["user_id"]
                 timestamp = convocation["timestamp"]
-                message_lines.append(f"- Utilisateur ID: {user_id} | Date: {timestamp}")
+                raison = convocation["reason"]
+                message_lines.append(f"- Utilisateur ID: {user_id} | Date: {timestamp} | Raison: {raison}")
             
             await interaction.response.send_message("\n".join(message_lines), ephemeral=True)
 

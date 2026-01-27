@@ -24,11 +24,13 @@ class Birthday(commands.Cog):
             json.dump(config, file, indent=4)
 
     def load_user_birthdays(self):
-        birthdays_path = os.path.join(self.birthday_data_path, "user_birthdays.json")
-        if os.path.exists(birthdays_path):
-            with open(birthdays_path, "r") as file:
-                return json.load(file)
-        return {}
+        birthdays_path = os.path.join("Files/Data/Birthday/birthday_data/user_birthdays.json")
+        os.makedirs(os.path.dirname(birthdays_path), exist_ok=True)
+        if not os.path.exists(birthdays_path):
+            with open(birthdays_path, "w", encoding="utf-8") as file:
+                json.dump({}, file, indent=4)
+        with open(birthdays_path, "r") as file:
+            return json.load(file)
 
     def save_user_birthdays(self, birthdays):
         birthdays_path = os.path.join(self.birthday_data_path, "user_birthdays.json")
